@@ -3,7 +3,7 @@ import NavButton from "@/components/NavButton";
 
 export default function Header() {
     return (
-        <header className="animate-slide bg-background h-12 p-2 border-b sticky top-0 flex justify-between">
+        <header className="bg-background h-12 p-2 border-b sticky top-0 flex justify-between">
             <NavButton href="/home" label="Home" icon={HomeIcon} />
 
             <ul className="flex gap-2">

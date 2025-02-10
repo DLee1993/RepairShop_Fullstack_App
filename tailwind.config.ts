@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 export default {
     darkMode: ["class"],
@@ -59,7 +60,25 @@ export default {
                 md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
             },
+            keyframes: {
+                fadein: {
+                    "0%": { opacity: "0" },
+                    "100%": { opacity: "1" },
+                },
+                slide: {
+                    from: {
+                        transform: "translateX(100%)",
+                    },
+                    to: {
+                        transform: "translateX(0%)",
+                    },
+                },
+            },
+            animation: {
+                appear: "fadein 1s ease",
+                slide: "slide 1s ease-in-out",
+            },
         },
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [animate],
 } satisfies Config;
