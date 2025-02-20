@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/components/themeprovider";
 
 export const metadata: Metadata = {
     title: "Compputer Repair Shop",
@@ -12,9 +13,16 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body className={`antialiased`}>
-                <main>{children}</main>
+                <ThemeProvider
+                    disableTransitionOnChange
+                    enableSystem
+                    attribute="class"
+                    defaultTheme="dark"
+                >
+                    <main>{children}</main>
+                </ThemeProvider>
             </body>
         </html>
     );

@@ -1,5 +1,6 @@
 import { HomeIcon, FileIcon, UsersRoundIcon } from "lucide-react";
 import NavButton from "@/components/NavButton";
+import { ThemeToggle } from "./ToogleTheme";
 
 export default function Header() {
     return (
@@ -12,6 +13,9 @@ export default function Header() {
                 </li>
                 <li>
                     <NavButton href="/customers" label="Customers" icon={UsersRoundIcon} />
+                </li>
+                <li>
+                    <ThemeToggle />
                 </li>
             </ul>
         </header>
