@@ -3,8 +3,12 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/themeprovider";
 
 export const metadata: Metadata = {
-    title: "Compputer Repair Shop",
+    title: {
+        template: "%s | Computer Repair shop",
+        default: "Computer Repair Shop",
+    },
     description: "A mock computer repair shop with users, staff and tickets",
+    applicationName: "Repair Shop"
 };
 
 export default function RootLayout({
