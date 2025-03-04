@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/themeprovider";
+import { AuthProvider } from "@/app/AuthProvider";
 
 export const metadata: Metadata = {
     title: {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
         default: "Computer Repair Shop",
     },
     description: "A mock computer repair shop with users, staff and tickets",
-    applicationName: "Repair Shop"
+    applicationName: "Repair Shop",
 };
 
 export default function RootLayout({
@@ -17,17 +18,19 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body className={`antialiased`}>
-                <ThemeProvider
-                    disableTransitionOnChange
-                    enableSystem
-                    attribute="class"
-                    defaultTheme="dark"
-                >
-                    <main>{children}</main>
-                </ThemeProvider>
-            </body>
-        </html>
+        <AuthProvider>
+            <html lang="en" suppressHydrationWarning>
+                <body className={`antialiased`}>
+                    <ThemeProvider
+                        disableTransitionOnChange
+                        enableSystem
+                        attribute="class"
+                        defaultTheme="dark"
+                    >
+                        <main>{children}</main>
+                    </ThemeProvider>
+                </body>
+            </html>
+        </AuthProvider>
     );
 }
