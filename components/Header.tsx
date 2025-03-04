@@ -1,6 +1,8 @@
-import { HomeIcon, FileIcon, UsersRoundIcon } from "lucide-react";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import NavButton from "@/components/NavButton";
 import { ThemeToggle } from "./ToogleTheme";
+import { Button } from "@/components/ui/button";
+import { HomeIcon, FileIcon, UsersRoundIcon, LogOutIcon } from "lucide-react";
 
 export default function Header() {
     return (
@@ -16,6 +18,20 @@ export default function Header() {
                 </li>
                 <li>
                     <ThemeToggle />
+                </li>
+                <li>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label="logout"
+                        title="logout"
+                        className="rounded-full"
+                        asChild
+                    >
+                        <LogoutLink>
+                            <LogOutIcon />
+                        </LogoutLink>
+                    </Button>
                 </li>
             </ul>
         </header>
