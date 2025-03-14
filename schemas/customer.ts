@@ -23,9 +23,3 @@ export const insertCustomerSchema = createInsertSchema(customers, {
 // Defines the shape of the data queried from the database
 
 export const selectCustomerSchema = createSelectSchema(customers);
-
-// Get the types of both schemas
-
-export const insertCustomerSchemaType = typeof insertCustomerSchema._type;
-
-export const selectCustomerSchemaType = typeof selectCustomerSchema._type;
