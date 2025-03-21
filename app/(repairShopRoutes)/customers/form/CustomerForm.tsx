@@ -20,17 +20,17 @@ export default function CustomerForm({ customer }: Props) {
     // default values for form
 
     const defaultValues: z.infer<typeof insertCustomerSchema> = {
-        id: customer?.id || 0,
-        firstName: customer?.firstName || "",
-        lastName: customer?.lastName || "",
-        address1: customer?.address1 || "",
-        address2: customer?.address2 || "",
-        city: customer?.city || "",
-        state: customer?.state || "",
-        zip: customer?.zip || "",
-        phone: customer?.phone || "",
-        email: customer?.email || "",
-        notes: customer?.notes || "",
+        id: customer?.id ?? 0,
+        firstName: customer?.firstName ?? "",
+        lastName: customer?.lastName ?? "",
+        address1: customer?.address1 ?? "",
+        address2: customer?.address2 ?? "",
+        city: customer?.city ?? "",
+        state: customer?.state ?? "",
+        zip: customer?.zip ?? "",
+        phone: customer?.phone ?? "",
+        email: customer?.email ?? "",
+        notes: customer?.notes ?? "",
     };
 
     // creation of form using the default values and customerSchema for validation
