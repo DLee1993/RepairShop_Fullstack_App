@@ -1,6 +1,7 @@
 import BackButton from "@/components/BackButton";
 import { getCustomer } from "@/lib/queries/getCustomer";
 import * as Sentry from "@sentry/nextjs";
+import CustomerForm from "@/app/(repairShopRoutes)/customers/form/CustomerForm";
 
 export default async function CustomerFormPage({
     searchParams,
@@ -23,11 +24,13 @@ export default async function CustomerFormPage({
                 );
             }
 
-            console.log(customer);
+            // console.log(customer);
 
-            // exisiting customer form component goes here //
+            // exisiting customer form component goes here
+            return <CustomerForm customer={customer} />;
         } else {
-            // new customer form component goes here //
+            // new customer form component goes here
+            return <CustomerForm />;
         }
     } catch (error) {
         if (error instanceof Error) {
