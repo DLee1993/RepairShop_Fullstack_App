@@ -15,9 +15,3 @@ export const insertTicketSchema = createInsertSchema(tickets, {
 // Defines the shape of the data queried from the database
 
 export const selectTicketSchema = createSelectSchema(tickets);
-
-// Get the types of both schemas
-
-export const insertTicketSchemaType = typeof insertTicketSchema._type;
-
-export const selectTicketSchemaType = typeof selectTicketSchema._type;
