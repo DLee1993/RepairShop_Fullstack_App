@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 // Input props
 // <S> generic type for the schema
 
-interface CustomFormInputProps<S> extends InputHTMLAttributes<HTMLInputElement> {
+interface CustomInputProps<S> extends InputHTMLAttributes<HTMLInputElement> {
     fieldTitle: string;
     nameInSchema: keyof S & string;
     className?: string;
@@ -19,7 +19,7 @@ export default function CustomInput<S>({
     nameInSchema,
     className,
     ...props
-}: CustomFormInputProps<S>) {
+}: CustomInputProps<S>) {
     const form = useFormContext();
 
     // render the input field with the form control
