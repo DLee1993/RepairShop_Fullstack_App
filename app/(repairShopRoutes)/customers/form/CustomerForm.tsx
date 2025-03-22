@@ -5,11 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import CustomInput from "@/components/form/CustomInput";
+import CustomTextArea from "@/components/form/CustomTextArea";
+import CustomSelect, { states } from "@/components/form/CustomSelect";
 
 // schemas & types
 import { insertCustomerSchema, selectCustomerSchema } from "@/schemas/customer";
 import { z } from "zod";
-import CustomTextArea from "@/components/form/CustomTextArea";
 
 // Component Props
 
@@ -64,56 +65,47 @@ export default function CustomerForm({ customer }: Props) {
                             <CustomInput<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="First Name"
                                 nameInSchema="firstName"
-                                placeholder="John"
                             />
                             <CustomInput<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="Last Name"
                                 nameInSchema="lastName"
-                                placeholder="Doe"
                             />
                             <CustomInput<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="Address 1"
                                 nameInSchema="address1"
-                                placeholder="123 Main St"
                             />
                             <CustomInput<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="Address 2"
                                 nameInSchema="address2"
-                                placeholder="Apt 4B"
                             />
                             <CustomInput<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="City"
                                 nameInSchema="city"
-                                placeholder="New York"
                             />
                         </div>
 
                         {/* form fields */}
                         <div className="flex flex-col gap-4 w-full max-w-xs">
-                            <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            <CustomSelect<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="State"
                                 nameInSchema="state"
-                                placeholder="NY"
+                                data={states}
                             />
                             <CustomInput<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="Zip Code"
                                 nameInSchema="zip"
-                                placeholder="10001"
                             />
                             <CustomInput<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="Phone Number"
                                 nameInSchema="phone"
-                                placeholder="(123) 456-7890"
                             />
                             <CustomInput<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="Email Address"
                                 nameInSchema="email"
-                                placeholder=""
                             />
                             <CustomTextArea<z.infer<typeof insertCustomerSchema>>
                                 fieldTitle="Notes"
                                 nameInSchema="notes"
-                                placeholder="Additional notes about the customer"
                             />
                         </div>
                     </section>
