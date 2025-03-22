@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import CustomInput from "@/components/form/CustomInput";
+import CustomTextArea from "@/components/form/CustomTextArea";
+import CustomCheckbox from "@/components/form/CustomCheckbox";
 
 // schemas & types
 import { selectCustomerSchema } from "@/schemas/customer";
@@ -44,23 +47,70 @@ export default function TicketForm({ customer, ticket }: Props) {
     // jsx form
 
     return (
-        <div className="flex flex-col gap-1 sm:px-8">
+        <div className="flex flex-col gap-5 mt-5">
             <div>
                 <h2 className="text-xl font-bold">
                     {ticket?.id ? `Edit Ticket #${ticket.id}` : "New Ticket"}
                 </h2>
             </div>
             <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex flex-col sm:flex-row gap-4 sm:gap-8"
-                >
-                    <p>{JSON.stringify(form.getValues())}</p>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <section className="flex flex-col md:flex-row justify-between items-start">
+                        {/* form fields */}
+                        <div className="flex flex-col gap-6 w-full max-w-xs">
+                            <CustomInput<z.infer<typeof insertTicketSchema>>
+                                fieldTitle="Title"
+                                nameInSchema="title"
+                            />
+                            <CustomTextArea<z.infer<typeof insertTicketSchema>>
+                                fieldTitle="Description"
+                                nameInSchema="description"
+                            />
+                            <CustomInput<z.infer<typeof insertTicketSchema>>
+                                fieldTitle="Tech"
+                                nameInSchema="tech"
+                                readOnly={true}
+                                disabled={true}
+                            />
+                            <CustomCheckbox<z.infer<typeof insertTicketSchema>>
+                                fieldTitle="Completed"
+                                nameInSchema="completed"
+                            />
 
-                    {/* submit form button */}
-                    <Button type="submit" className="w-full sm:w-fit">
-                        Submit
-                    </Button>
+                            {/* form control buttons */}
+                            <div className="flex gap-2 w-fit mt-10">
+                                <Button type="submit" className="w-full" title="Save">
+                                    Save
+                                </Button>
+                                <Button
+                                    type="button"
+                                    className="w-full sm:w-fit"
+                                    title="Reset"
+                                    variant="destructive"
+                                    onClick={() => form.reset(defaultValues)}
+                                >
+                                    Reset
+                                </Button>
+                            </div>
+                        </div>
+                        <div className="mt-4 md:mt-0 space-y-5">
+                            <h3 className="font-semibold">Customer information</h3>
+                            <hr className="w-4/5" />
+                            <ul className="space-y-1">
+                                <li>
+                                    Name: {customer.firstName} {customer.lastName}
+                                </li>
+                                <li>Address: {customer.address1}</li>
+                                {customer.address2 && <li>{customer.address2}</li>}
+                                <li>City: {customer.city}</li>
+                                <li>State: {customer.state}</li>
+                                <li>Zip-code: {customer.zip}</li>
+                            </ul>
+                            <hr className="w-4/5" />
+                            <p>Email: {customer.email}</p>
+                            <p>Phone: {customer.phone}</p>
+                        </div>
+                    </section>
                 </form>
             </Form>
         </div>
