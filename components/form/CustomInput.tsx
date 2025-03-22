@@ -14,7 +14,7 @@ interface CustomFormInputProps<S> extends InputHTMLAttributes<HTMLInputElement> 
     className?: string;
 }
 
-export default function CustomFormInput<S>({
+export default function CustomInput<S>({
     fieldTitle,
     nameInSchema,
     className,

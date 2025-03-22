@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import CustomInput from "@/components/form/CustomInput";
 
 // schemas & types
 import { insertCustomerSchema, selectCustomerSchema } from "@/schemas/customer";
@@ -57,14 +58,75 @@ export default function CustomerForm({ customer }: Props) {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex flex-col sm:flex-row gap-4 sm:gap-8"
+                    className="flex flex-col md:flex-row gap-4 md:gap-8 mt-10"
                 >
-                    <p>{JSON.stringify(form.getValues())}</p>
+                    {/* form fields */}
+                    <div className="flex flex-col gap-4 w-full max-w-xs">
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="First Name"
+                            nameInSchema="firstName"
+                            placeholder="John"
+                        />
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="Last Name"
+                            nameInSchema="lastName"
+                            placeholder="Doe"
+                        />
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="Address 1"
+                            nameInSchema="address1"
+                            placeholder="123 Main St"
+                        />
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="Address 2"
+                            nameInSchema="address2"
+                            placeholder="Apt 4B"
+                        />
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="City"
+                            nameInSchema="city"
+                            placeholder="New York"
+                        />
+                    </div>
 
-                    {/* submit form button */}
-                    <Button type="submit" className="w-full sm:w-fit">
-                        Submit
-                    </Button>
+                    {/* form fields */}
+                    <div className="flex flex-col gap-4 w-full max-w-xs">
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="State"
+                            nameInSchema="state"
+                            placeholder="NY"
+                        />
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="Zip Code"
+                            nameInSchema="zip"
+                            placeholder="10001"
+                        />
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="Phone Number"
+                            nameInSchema="phone"
+                            placeholder="(123) 456-7890"
+                        />
+                        <CustomInput<z.infer<typeof insertCustomerSchema>>
+                            fieldTitle="Email Address"
+                            nameInSchema="email"
+                            placeholder=""
+                        />
+                        <div className="flex gap-2">
+                            {/* submit form button */}
+                            <Button type="submit" className="w-full" title="Save">
+                                Save
+                            </Button>
+                            <Button
+                                type="button"
+                                className="w-full sm:w-fit"
+                                title="Reset"
+                                variant="destructive"
+                                onClick={() => form.reset(defaultValues)}
+                            >
+                                Reset
+                            </Button>
+                        </div>
+                    </div>
                 </form>
             </Form>
         </div>
