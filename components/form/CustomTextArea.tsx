@@ -4,7 +4,8 @@ import { TextareaHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-// Input props
+
+// Textarea props
 // <S> generic type for the schema
 
 interface CustomTextAreaProps<S> extends TextareaHTMLAttributes<HTMLTextAreaElement> {
