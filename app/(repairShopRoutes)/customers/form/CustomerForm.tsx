@@ -2,10 +2,12 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import CustomInput from "@/components/form/CustomInput";
 import CustomTextArea from "@/components/form/CustomTextArea";
+import CustomCheckbox from "@/components/form/CustomCheckbox";
 import CustomSelect, { states } from "@/components/form/CustomSelect";
 
 // schemas & types
@@ -20,8 +22,12 @@ type Props = {
 
 // Component
 export default function CustomerForm({ customer }: Props) {
-    // default values for form
+    // access the permissions from kinde auth
+    const { getPermission, isLoading } = useKindeBrowserClient();
+    // get manager
+    const isManager = !isLoading && getPermission("manager")?.isGranted;
 
+    // default values for form
     const defaultValues: z.infer<typeof insertCustomerSchema> = {
         id: customer?.id ?? 0,
         firstName: customer?.firstName ?? "",
@@ -34,6 +40,7 @@ export default function CustomerForm({ customer }: Props) {
         phone: customer?.phone ?? "",
         email: customer?.email ?? "",
         notes: customer?.notes ?? "",
+        active: customer?.active ?? true,
     };
 
     // creation of form using the default values and customerSchema for validation
@@ -49,12 +56,12 @@ export default function CustomerForm({ customer }: Props) {
     }
 
     // jsx form
-
     return (
         <div className="flex flex-col gap-5 mt-5">
             <div>
                 <h2 className="text-xl font-bold">
-                    {customer?.id ? "Edit" : "New"} Customer details
+                    {customer?.id ? "Edit" : "New"} Customer{" "}
+                    {customer?.id ? `${customer.id}` : "details"}
                 </h2>
             </div>
             <Form {...form}>
@@ -107,6 +114,12 @@ export default function CustomerForm({ customer }: Props) {
                                 fieldTitle="Notes"
                                 nameInSchema="notes"
                             />
+                            {isManager && customer?.id && (
+                                <CustomCheckbox<z.infer<typeof insertCustomerSchema>>
+                                    fieldTitle="Active"
+                                    nameInSchema="active"
+                                />
+                            )}
                         </div>
                     </section>
                     {/* form control buttons */}

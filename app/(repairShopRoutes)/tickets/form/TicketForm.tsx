@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import CustomInput from "@/components/form/CustomInput";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import CustomCheckbox from "@/components/form/CustomCheckbox";
+import CustomSelect from "@/components/form/CustomSelect";
 
 // schemas & types
 import { selectCustomerSchema } from "@/schemas/customer";
@@ -18,11 +19,18 @@ import { z } from "zod";
 type Props = {
     customer: z.infer<typeof selectCustomerSchema>;
     ticket?: z.infer<typeof selectTicketSchema>;
+    techs?: {
+        id: string;
+        description: string;
+    }[];
+    isEditable?: boolean;
 };
 
-export default function TicketForm({ customer, ticket }: Props) {
-    // default values for form
+export default function TicketForm({ customer, ticket, isEditable = true, techs }: Props) {
+    // check for mananger permission
+    const isManager = Array.isArray(techs);
 
+    // default values for form
     const defaultValues: z.infer<typeof insertTicketSchema> = {
         id: ticket?.id ?? "(New)",
         customerId: ticket?.customerId ?? customer.id,
@@ -61,37 +69,60 @@ export default function TicketForm({ customer, ticket }: Props) {
                             <CustomInput<z.infer<typeof insertTicketSchema>>
                                 fieldTitle="Title"
                                 nameInSchema="title"
+                                disabled={!isEditable}
                             />
                             <CustomTextArea<z.infer<typeof insertTicketSchema>>
                                 fieldTitle="Description"
                                 nameInSchema="description"
-                            />
-                            <CustomInput<z.infer<typeof insertTicketSchema>>
-                                fieldTitle="Tech"
-                                nameInSchema="tech"
-                                readOnly={true}
-                                disabled={true}
-                            />
-                            <CustomCheckbox<z.infer<typeof insertTicketSchema>>
-                                fieldTitle="Completed"
-                                nameInSchema="completed"
+                                disabled={!isEditable}
                             />
 
+                            {isManager ? (
+                                <CustomSelect<z.infer<typeof insertTicketSchema>>
+                                    fieldTitle="Tech ID"
+                                    nameInSchema="tech"
+                                    data={[
+                                        {
+                                            id: "new-ticket@example.com",
+                                            description: "new-ticket@example.com",
+                                        },
+                                        ...techs,
+                                    ]}
+                                />
+                            ) : (
+                                <CustomInput<z.infer<typeof insertTicketSchema>>
+                                    fieldTitle="Tech"
+                                    nameInSchema="tech"
+                                    readOnly={true}
+                                    disabled={true}
+                                />
+                            )}
+
+                            {ticket?.id && (
+                                <CustomCheckbox<z.infer<typeof insertTicketSchema>>
+                                    fieldTitle="Completed"
+                                    nameInSchema="completed"
+                                    disabled={!isEditable}
+                                />
+                            )}
+
                             {/* form control buttons */}
-                            <div className="flex gap-2 w-fit mt-10">
-                                <Button type="submit" className="w-full" title="Save">
-                                    Save
-                                </Button>
-                                <Button
-                                    type="button"
-                                    className="w-full sm:w-fit"
-                                    title="Reset"
-                                    variant="destructive"
-                                    onClick={() => form.reset(defaultValues)}
-                                >
-                                    Reset
-                                </Button>
-                            </div>
+                            {isEditable && (
+                                <div className="flex gap-2 w-fit mt-10">
+                                    <Button type="submit" className="w-full" title="Save">
+                                        Save
+                                    </Button>
+                                    <Button
+                                        type="button"
+                                        className="w-full sm:w-fit"
+                                        title="Reset"
+                                        variant="destructive"
+                                        onClick={() => form.reset(defaultValues)}
+                                    >
+                                        Reset
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                         <div className="mt-4 md:mt-0 space-y-5">
                             <h3 className="font-semibold">Customer information</h3>

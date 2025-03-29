@@ -3,6 +3,19 @@ import { getCustomer } from "@/lib/queries/getCustomer";
 import * as Sentry from "@sentry/nextjs";
 import CustomerForm from "@/app/(repairShopRoutes)/customers/form/CustomerForm";
 
+// generate dynamic meta data, based on customerId
+export async function generateMetadata({
+    searchParams,
+}: {
+    searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+    const { customerId } = await searchParams;
+
+    if (!customerId) return { title: "New Customer" };
+
+    return { title: `Edit customer no. ${customerId}` };
+}
+
 export default async function CustomerFormPage({
     searchParams,
 }: {
